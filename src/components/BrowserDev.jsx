@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { BsSearch } from "react-icons/bs";
+import { useEffect, useState } from "react";
 
 const InputContainer = styled.div`
   background-color: #15157e;
@@ -37,34 +38,32 @@ const SearchButton = styled.button`
   }
 `;
 
-const BrowserDev = ({
-  search,
-  setSearch,
-  setConsult,
-  setData,
-  setLoading,
-  error,
-  setError,
-}) => {
+const BrowserDev = ({ search, setSearch, setConsult, setData, setLoading }) => {
+  const [url, setUrl] = useState("");
   const handleChange = (e) => {
     setSearch({ value: e.target.value });
   };
-  const handleClick = async () => {
-    try {
-      setLoading(true);
-      const profile = await fetch(`https://api.github.com/users/${search}`);
-      const profileJson = await profile.json();
-
-      if (profileJson) {
-        setData(profileJson);
-        setConsult(true);
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
+  const handleClick = () => {
+    setUrl(`https://api.github.com/users/${search}`);
   };
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        setLoading(true);
+        const profile = await fetch(url);
+        const profileJson = await profile.json();
+        if (profileJson) {
+          setData(profileJson);
+          setConsult(true);
+        }
+      } catch (error) {
+      } finally {
+        setLoading(false);
+      }
+    };
+    getData(); // eslint-disable-next-line
+  }, [url]);
 
   return (
     <>
