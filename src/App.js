@@ -1,24 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import styled from "styled-components";
+import UserFinderBox from "./components/UserFinderBox";
+const MainContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  background-color: ${(props) => props.themeColor};
+  height: 100vh;
+  align-items: center;
+`;
 
 function App() {
+  const [themeColor, setThemeColor] = useState("#040425");
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <MainContainer themeColor={themeColor}>
+      <UserFinderBox themeColor={themeColor} setThemeColor={setThemeColor} />
+    </MainContainer>
   );
 }
 
